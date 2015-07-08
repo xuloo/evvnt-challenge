@@ -9,7 +9,7 @@ Feel free to use any database and any version of Ruby (1.9 or greater).
 
 The following endpoint lists event listings:
 
-**https://api-sandbox-evvnt.herokuapp.com/events**
+**https://api.sandbox.evvnt.com/events**
 
 The endpoint is protected by Basic Auth and requires the following credentials to
 access:
