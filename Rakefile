@@ -4,4 +4,8 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-EvvntChallenge::Application.load_tasks
+Events::Application.load_tasks
+
+task :test do
+  system("cd ngapp; grunt test")
+end

@@ -1,4 +1,10 @@
-EvvntChallenge::Application.routes.draw do
+Events::Application.routes.draw do
+
+  get 'api/ping' => 'application#ping'
+
+  resources :events, path: 'api/events'
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

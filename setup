@@ -1,0 +1,40 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+echo "$DIR"
+
+ELK_DIR=vendor/elk
+LOGSTASH_VERSION=1.5.0.rc1.1
+LOGSTASH_NAME=logstash-"$LOGSTASH_VERSION"
+
+#echo "installing the custom input plugin"
+
+cd "$DIR/$ELK_DIR/$LOGSTASH_NAME"
+#./bin/plugin install logstash-input-evvnt-challenge
+
+echo "setting up the logstash config"
+
+rm -f evvnt.conf
+
+echo "input {
+  evvnt {
+    host => \"https://api.sandbox.evvnt.com\"
+    path => \"events\"
+    user => \"evvntchallenge\"
+    pass => \"c2136849e524d6f43b90ac3d7e98e5dc\"
+  }
+}
+
+output {
+  elasticsearch {
+    host => localhost
+    index => \"events\"
+    index_type => \"event\"
+  }
+  stdout {
+    codec => rubydebug
+  }
+}" >> evvnt.conf
+
+./bin/logstash -f evvnt.conf &
