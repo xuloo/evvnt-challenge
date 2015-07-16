@@ -10,6 +10,8 @@
 angular.module('evvntApp')
   .controller('EvvntCtrl', ['$scope', '$log', 'evvntService', function ($scope, $log, $evvntService) {
 
+    $scope.event = null;
+
     $evvntService.all().then(
       function(response) {
         $log.info(response);
@@ -18,5 +20,10 @@ angular.module('evvntApp')
       function(error) {
         $log.error(error);
       }
-    )
+    );
+
+    $scope.selectEvent = function(event) {
+      $log.info("selected event " + event);
+      $scope.event = event;
+    };
   }]);

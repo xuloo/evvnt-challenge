@@ -1,13 +1,33 @@
-<div class="row">
+<div class="row" ng-hide="event">
   <div class="col-lg-12">
     <div ng-repeat="event in events">
-      <div class="col-lg-3 well">
+      <div class="col-lg-3 well" ng-click="selectEvent(event)">
         <div class="col-lg-12">
-          <h4>{{event.event.title}}</h4>
+          <h4>{{event.title}}</h4>
         </div>
         <div class="col-lg-12">
-          <img ng-src="{{event.event.image_url}}" style="max-width:100%;max-height:100;"/>
+          <img ng-src="{{event.image_url}}" style="max-width:100px"/>
         </div>
+          <p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p>
+        <!--div class="col-lg-12" ng-repeat="tag in event.keywords.split(',')">
+          <span class="label label-default">{{tag}}</span
+        </div-->
+        <div class="col-lg-12">
+          <span>start: </span><span>{{event.start_time | date:'medium'}}</span>
+          <span>end: </span><span>{{event.end_time | date:'medium'}}</span>
+          <span>door: </span><span>{{event.door_time | date:'medium'}}</span>
+          <span>last entry: </span><span>{{event.last_entry_time | date:'medium'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="event">
+  <div class="col-lg-12">
+    <div class="col-lg-3 well">
+      <div class="col-lg-12">
+        <h2>{{event.title}}</h2>
       </div>
     </div>
   </div>

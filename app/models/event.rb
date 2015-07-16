@@ -43,6 +43,11 @@ class Event
   attribute :door_time, Date
   attribute :last_entry_time, Date
 
+  def as_json(options = nil)
+    options = {:root => false}
+    super(options)
+  end
+
 end
 
 
