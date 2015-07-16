@@ -29,6 +29,8 @@ class Event
   attribute :image_url, String
   attribute :image_urls, Array
   attribute :links, Array
+  attribute :artists, String
+  attribute :keywords, String
 
   attribute :venue, Venue
 
