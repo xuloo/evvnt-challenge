@@ -23,7 +23,11 @@ angular.module('evvntApp')
     );
 
     $scope.selectEvent = function(event) {
-      $log.info("selected event " + event);
+      $log.info("selected event " + event.id);
       $scope.event = event;
     };
+
+    $scope.moreLike = function(event) {
+      $log.info("finding more like " + event.id);
+    }
   }]);

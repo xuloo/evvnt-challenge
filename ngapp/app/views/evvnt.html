@@ -18,6 +18,9 @@
           <span>door: </span><span>{{event.door_time | date:'medium'}}</span>
           <span>last entry: </span><span>{{event.last_entry_time | date:'medium'}}</span>
         </div>
+        <div class="col-lg-12">
+          <a href="#" ng-click="moreLike(event)">more like this</a>
+        </div>
       </div>
     </div>
   </div>
