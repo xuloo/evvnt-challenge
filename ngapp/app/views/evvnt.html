@@ -1,1 +1,14 @@
-<p>This is the evvnt view.</p>
+<div class="row">
+  <div class="col-lg-12">
+    <div ng-repeat="event in events">
+      <div class="col-lg-3 well">
+        <div class="col-lg-12">
+          <h4>{{event.event.title}}</h4>
+        </div>
+        <div class="col-lg-12">
+          <img ng-src="{{event.event.image_url}}" style="max-width:100%;max-height:100;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

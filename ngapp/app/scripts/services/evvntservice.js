@@ -23,6 +23,8 @@ angular.module('evvntApp')
             deferred.reject(error);
           }
         )
+
+        return deferred.promise;
       }
 
     };

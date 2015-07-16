@@ -12,6 +12,7 @@ angular.module('evvntApp')
 
     $evvntService.all().then(
       function(response) {
+        $log.info(response);
         $scope.events = response;
       },
       function(error) {
