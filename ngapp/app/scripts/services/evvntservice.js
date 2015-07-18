@@ -23,7 +23,7 @@ angular.module('evvntApp')
 
         var deferred = $q.defer();
 
-        $http.get('/api/events').then(
+        $http.get('/api/events', {params: {p: p}}).then(
           function(response) {
             deferred.resolve(response.data);
           },

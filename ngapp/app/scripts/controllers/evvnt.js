@@ -12,7 +12,32 @@ angular.module('evvntApp')
 
     $scope.event = null;
 
-    showAll();
+    $scope.events = [];
+    $scope.totalEvents = 0;
+    $scope.eventsPerPage = 10;
+
+    getResultsPage(1);
+
+    $scope.pagination = {
+        current: 1
+    };
+
+    $scope.pageChanged = function(newPage) {
+        getResultsPage(newPage);
+    };
+
+    function getResultsPage(pageNumber) {
+        $evvntService.all(pageNumber).then(
+          function(response) {
+            $log.info("received " + response.count + " responses for page " + pageNumber);
+            $scope.events = response.events;
+            $scope.totalEvents = response.total;
+          },
+          function(error) {
+            $log.error(error);
+          }
+        )
+    }
 
     $scope.selectEvent = function(event) {
       $log.info("selected event " + event.id);

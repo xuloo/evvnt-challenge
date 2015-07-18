@@ -23,7 +23,7 @@
 </div>
 <div class="row" ng-hide="event">
   <div class="col-lg-12">
-    <div ng-repeat="event in events">
+    <div dir-paginate="event in events | itemsPerPage: 10" total-items="totalEvents" current-page="pagination.current">
       <div class="col-lg-10 col-lg-offset-1 well" ng-click="selectEvent(event)">
         <div class="col-lg-12">
           <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
@@ -46,6 +46,11 @@
         </div>
       </div>
     </div>
+    <dir class="col-lg-10 col-lg-offset-1 well">
+      <dir class="center-block">
+        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+      </dir>
+    </dir>
   </div>
 </div>
 
