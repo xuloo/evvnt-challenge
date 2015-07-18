@@ -24,23 +24,23 @@
 <div class="row" ng-hide="event">
   <div class="col-lg-12">
     <div ng-repeat="event in events">
-      <div class="col-lg-3 well" ng-click="selectEvent(event)">
+      <div class="col-lg-10 col-lg-offset-1 well" ng-click="selectEvent(event)">
         <div class="col-lg-12">
-          <h4>{{event.title}}</h4>
+          <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
         </div>
         <div class="col-lg-12">
           <img ng-src="{{event.image_url}}" style="max-width:100px"/>
         </div>
-          <p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p>
+          <!--p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p-->
         <!--div class="col-lg-12" ng-repeat="tag in event.keywords.split(',')">
           <span class="label label-default">{{tag}}</span
         </div-->
-        <div class="col-lg-12">
+        <!--div class="col-lg-12">
           <span>start: </span><span>{{event.start_time | date:'medium'}}</span>
           <span>end: </span><span>{{event.end_time | date:'medium'}}</span>
           <span>door: </span><span>{{event.door_time | date:'medium'}}</span>
           <span>last entry: </span><span>{{event.last_entry_time | date:'medium'}}</span>
-        </div>
+        </div-->
         <div class="col-lg-12">
           <a href="#" ng-click="moreLike(event)">more like this</a>
         </div>

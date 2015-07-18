@@ -3,22 +3,9 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    result = Event.all
-
-    print result.count.to_s + " results"
-
-    @events = result.to_a
-
-    @events.each { |event|
-      print event.to_json
-    }
+    result = Event.all sort: { start_time: { order: 'desc' } }
 
     render json: result
-
-    #respond_to do |format|
-    #  format.html # index.html.erb
-    #  format.json { render json: @events }
-    #end
   end
 
   def search
