@@ -21,6 +21,28 @@ class EventsController < ApplicationController
     #end
   end
 
+  def search
+    tags = { pre_tags: '<em class="hl">', post_tags: '</em>' }
+    results = Event.search \
+      query: {
+        multi_match: {
+          query: params[:q],
+          fields: ['keywords']
+        }
+      },
+      highlight: {
+        tags_schema: 'styled',
+        fields: {
+          name:    { number_of_fragments: 0 },
+          members_combined: { number_of_fragments: 0 },
+          profile: { fragment_size: 50 }
+        }
+      }
+
+    render json: results
+  end
+
+
   # GET /events/1
   # GET /events/1.json
   def show
