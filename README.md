@@ -75,15 +75,42 @@ The front end was built completely separately from the Rails backend:
 
 The design is prety sparse - this is deliberae, the idea is to make the frameworks/tools we're using do the heavy lifing - they've been built by people who are smarer han us and used by lots of oher people who are smarter than us. We don't need to re-invent the wheel.
 
-So, an initializer <pre>iniializers/elasticsearch.rb</pre> configure the elasticsearch client (and configures the logger it uses, for good measure) - the host for elasticsearch is defined by an environment variable to make it easy to run the same code on different environments in different modes.
+So, an initializer `iniializers/elasticsearch.rb` configures the elasticsearch client (and configures the logger it uses, for good measure) - the host for elasticsearch is defined by an environment variable to make it easy to run the same code on different environments in different modes.
 
-a couple of routes forwrd requests to the <pre>/api</pre> rather than the main site url.
+a couple of routes forwrd requests to the `/api` rather than the main site url.
 
-There's a single model module <pre>models/event.rb</pre> which contains the domain model for the Event class and also the Venue class (which is never queried directly).
+There's a single model module `models/event.rb` which contains the domain model for the Event class and also the Venue class (which is never queried directly).
 
-Calls to the /api are routed to the controllers - there are only 4 methods in total here for handling everything we need. The controller methods delegate to Elasticsearch::Persistence::Model methods and almost return the data provided by those methods, they're only decorated in a couple of instances in order to provide pagination support on the front-end.
+Calls to the /api are routed to the controllers - there are only 4 methods in total here for handling everything we need. The controller methods delegate to `Elasticsearch::Persistence::Model` methods and almost return the data provided by those methods, they're only decorated in a couple of instances in order to provide pagination support on the front-end.
 
-## Setting up Elasticsearch/Logstash locally
+===
+
+## Running this project
+
+There are a couple of options here, what with using elasticsearch:
+
+#### Run the site locally, use the remote Elasticsearch/Logstash instances i've got running on AWS.
+
+This is the easiest way - just create the environment variable that tells the site where to find ES
+
+'''
+export ELASTICSEARCH_HOST=evvnt-challenge.xuloo.cc
+'''
+
+Then it's the usual
+
+'''
+bundle install
+rails s
+'''
+
+and you're done.
+
+#### Run the whole thing locally (this site and ES).
+
+This is a bit more complicated as it requires the configuration of Logstash. But it's by no means difficult.
+
+##### Setting up Elasticsearch/Logstash locally
 
 Download and install Elasticsearch and Logstash for you platform.
 
@@ -102,13 +129,13 @@ Once ES and Logstash are running you'll need to:
 3. Install the _logstash-input-evvnt-challenge_ plugin into Logstash
 4. Define the Logstash pipeline that will collect the event data and push it to ES.
 
-### Create the 'events' index
+###### Create the 'events' index
 
 '''
 curl -XPOST 'http://localhost:9200/events'
 '''
 
-### Customise the mapping for the 'event' type
+###### Customise the mapping for the 'event' type
 
 We need to map the _id field for the event document to the 'id' property of the event that's being stored in the document. We also need to prevent the analyzer from
 processing venue.name - otherwise when we try to get the list of the venue names with an 'aggregate' it'll give us the unique _words_ that make up the venue
@@ -120,7 +147,7 @@ curl -XPUT 'http://localhost:9200/events/_mapping/event' -d '{"event": {"_id": {
 
 ### Install the _logstash-input-evvnt-challenge_ plugin into Logstash
 
-#### Install development version
+###### Install development version
 
 The plugin can be used from source available at
 
@@ -134,7 +161,7 @@ bin/plugin install [path-to-plugin-source] --no-validate
 
 Then restart Logstash
 
-#### Install from RubyGems
+###### Install from RubyGems
 
 This is the same as any other Logstash plugin.
 
@@ -142,7 +169,7 @@ This is the same as any other Logstash plugin.
 bin/plugin install logstash-input-evvnt-challenge
 '''
 
-### Define the Logstash pipeline that will collect the event data and push it to ES.
+###### Define the Logstash pipeline that will collect the event data and push it to ES.
 
 The following config will create the pipeline.
 
