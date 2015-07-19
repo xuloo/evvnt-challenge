@@ -5,9 +5,39 @@ class EventsController < ApplicationController
   def index
     result = Event.all sort: { start_time: { order: 'desc' } }, size: 10, from: params[:p]
 
-    print 'result: ' + result.total.to_s
-
     render json: {events: result, total: result.total}
+  end
+
+  def for_venue
+
+    print "finding events taking place at #{params[:v]}"
+
+    #result = Event.search { 'query': { 'match': { 'venue.name': '#{params[:v]}'}}};
+    query = '{"query": {"bool": {"must": [{ "match": { "user.name": "' + params[:v] + '"}}]}}}'
+    print query
+    result = Event.search query
+
+    #result = Event.search \
+    #  query: {
+    #    bool: {
+    #      must: [
+    #        {
+    #          nested: {
+    #            path: "venue",
+    #            query: {
+    #              bool: {
+    #                must: [
+    #                  { match: { venue: params[:v] }}
+    #                ]
+    #              }
+    #            }
+    #          }
+    #        }
+    #      ]
+    #    }
+    #  }
+
+      render json: {events: result, total: result.total}
   end
 
   def search

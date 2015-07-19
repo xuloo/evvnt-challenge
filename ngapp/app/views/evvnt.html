@@ -28,8 +28,11 @@
         <div class="col-lg-12">
           <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-2">
           <img ng-src="{{event.image_url}}" style="max-width:100px"/>
+        </div>
+        <div class="col-lg-10">
+          <span class="label label-primary" ng-click="eventsForVenue(event.venue)">{{event.venue.name}}</span>
         </div>
           <!--p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p-->
         <!--div class="col-lg-12" ng-repeat="tag in event.keywords.split(',')">

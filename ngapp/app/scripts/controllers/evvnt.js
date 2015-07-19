@@ -11,6 +11,7 @@ angular.module('evvntApp')
   .controller('EvvntCtrl', ['$scope', '$log', 'evvntService', function ($scope, $log, $evvntService) {
 
     $scope.event = null;
+    $scope.venue = null;
 
     $scope.events = [];
     $scope.totalEvents = 0;
@@ -64,6 +65,20 @@ angular.module('evvntApp')
     $scope.clearSearch = function() {
       $log.info("clearing search");
       showAll();
+    }
+
+    $scope.eventsForVenue = function(venue) {
+      $log.info("finding all events for venue '" + venue.name + "'");
+      $evvntService.forVenue(venue).then(
+        function(response) {
+          $log.info("received " + response.count + " responses for page " + pageNumber);
+          $scope.events = response.events;
+          $scope.totalEvents = response.total;
+        },
+        function(error) {
+          $log.error(error);
+        }
+      )
     }
 
     function showAll() {

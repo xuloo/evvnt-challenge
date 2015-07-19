@@ -2,6 +2,7 @@ Events::Application.routes.draw do
 
   get 'api/ping' => 'application#ping'
   get 'api/events/search' => 'events#search'
+  get 'api/events/forvenue' => 'events#for_venue'
 
   resources :events, path: 'api/events'
 
