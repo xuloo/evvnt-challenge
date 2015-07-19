@@ -5,34 +5,19 @@ class EventsController < ApplicationController
   def index
     result = Event.all sort: { start_time: { order: 'desc' } }, size: 10, from: params[:p]
 
-    render json: {events: result, total: result.total}
+    render json: { events: result, total: result.total }
   end
 
   def for_venue
-    result = Event.search query: {match: {'venue.name' => params[:v] }}
+    result = Event.search query: { match: { 'venue.name' => params[:v] } }
 
-    render json: {events: result, total: result.total}
+    render json: { events: result, total: result.total }
   end
 
   def search
-    tags = { pre_tags: '<em class="hl">', post_tags: '</em>' }
-    results = Event.search \
-      query: {
-        multi_match: {
-          query: params[:q],
-          fields: ['keywords']
-        }
-      },
-      highlight: {
-        tags_schema: 'styled',
-        fields: {
-          name:    { number_of_fragments: 0 },
-          members_combined: { number_of_fragments: 0 },
-          profile: { fragment_size: 50 }
-        }
-      }
+    result = Event.search query: { match: { 'keywords' => params[:q] } }
 
-    render json: results
+    render json: { events: result, total: result.total }
   end
 
 

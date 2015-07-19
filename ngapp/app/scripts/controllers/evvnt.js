@@ -56,7 +56,8 @@ angular.module('evvntApp')
       $evvntService.search(q). then(
         function(response) {
           $log.info(response);
-          $scope.events = response;
+          $scope.events = response.events;
+          $scope.totalEvents = response.total;
         },
         function(error) {
           $log.error(error);
