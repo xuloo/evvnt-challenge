@@ -87,22 +87,22 @@ Calls to the /api are routed to the controllers - there are only 4 methods in to
 
 ## Running this project
 
-There are a couple of options here, what with using elasticsearch:
+The site is already running at http://evvnt-challenge.xuloo.cc However, if you want to get it up and running locally there are a couple of options, what with using elasticsearch:
 
 #### Run the site locally, use the remote Elasticsearch/Logstash instances i've got running on AWS.
 
-This is the easiest way - just create the environment variable that tells the site where to find ES
+This is the easiest way - it'll connect to the same ES instance that the demo site is using. just create the environment variable that tells the site where to find ES
 
-'''
+```
 export ELASTICSEARCH_HOST=evvnt-challenge.xuloo.cc
-'''
+```
 
 Then it's the usual
 
-'''
+```
 bundle install
 rails s
-'''
+```
 
 and you're done.
 
@@ -131,9 +131,9 @@ Once ES and Logstash are running you'll need to:
 
 ###### Create the 'events' index
 
-'''
+```
 curl -XPOST 'http://localhost:9200/events'
-'''
+```
 
 ###### Customise the mapping for the 'event' type
 
@@ -141,9 +141,9 @@ We need to map the _id field for the event document to the 'id' property of the 
 processing venue.name - otherwise when we try to get the list of the venue names with an 'aggregate' it'll give us the unique _words_ that make up the venue
 names rather than the _phrases_.
 
-'''
+```
 curl -XPUT 'http://localhost:9200/events/_mapping/event' -d '{"event": {"_id": {"path": "id"}, "properties": {"venue": {"properties": {"name": {"type": "string", "index": "not_analyzed"}}}}}}'
-'''
+```
 
 ### Install the _logstash-input-evvnt-challenge_ plugin into Logstash
 
@@ -155,9 +155,9 @@ https://github.com/xuloo/logstash-input-evvnt-challenge
 
 You'll need to clone the repo and then install it by specifying the path to the clone.
 
-'''
+```
 bin/plugin install [path-to-plugin-source] --no-validate
-'''
+```
 
 Then restart Logstash
 
@@ -165,15 +165,15 @@ Then restart Logstash
 
 This is the same as any other Logstash plugin.
 
-'''
+```
 bin/plugin install logstash-input-evvnt-challenge
-'''
+```
 
 ###### Define the Logstash pipeline that will collect the event data and push it to ES.
 
 The following config will create the pipeline.
 
-'''
+```
 input {
   evvnt {
     host => "https://api.sandbox.evvnt.com"
@@ -193,6 +193,6 @@ output {
     codec => rubydebug
   }
 }
-'''
+```
 
 You'll then have to specify this config when you start Logstash.
