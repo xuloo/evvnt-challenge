@@ -99,6 +99,13 @@ This is the easiest way - it'll connect to the same ES instance that the demo si
 export ELASTICSEARCH_HOST=evvnt-challenge.xuloo.cc
 ```
 
+Then you'll need to setup the front-end project
+
+```
+npm install
+bower install
+```
+
 Then it's the usual
 
 ```
@@ -106,7 +113,13 @@ bundle install
 rails s
 ```
 
-and you're done.
+then start the front-end project with grunt
+
+```
+grunt server
+```
+
+This starts the front-end running on port 9000 - with the rails app running on 3000 there's a problem accessing the api so there's a proxy configured in the `Gruntfile` to map the `/api` calls to the correct port.
 
 #### Run the whole thing locally (this site and ES).
 
