@@ -18,6 +18,14 @@
           </div>
         </div>
       </fieldset>
+      <fieldset>
+        <div class="form-group col-lg-12">
+          <label for="inputKeyword" class="col-lg-2 control-label">Search</label>
+          <div class="col-lg-10">
+            <select ng-model="venue" ng-options="venue as venue for venue in venues" ng-init="selected=venues[0]"></select>
+          </div>
+        </div>
+      </fieldset>
     </form>
   </div>
 </div>

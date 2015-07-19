@@ -68,6 +68,21 @@ angular.module('evvntApp')
         )
 
         return deferred.promise;
+      },
+
+      venues: function() {
+        var deferred = $q.defer();
+
+        $http.get('/api/venues').then(
+          function(response) {
+            deferred.resolve(response.data);
+          },
+          function(error) {
+            deferred.reject(error);
+          }
+        )
+
+        return deferred.promise;
       }
 
     };

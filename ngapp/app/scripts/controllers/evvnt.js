@@ -23,6 +23,8 @@ angular.module('evvntApp')
         current: 1
     };
 
+    allVenues();
+
     $scope.pageChanged = function(newPage) {
         getResultsPage(newPage);
     };
@@ -91,5 +93,17 @@ angular.module('evvntApp')
           $log.error(error);
         }
       );
+    }
+
+    function allVenues() {
+      $evvntService.venues().then(
+        function(response) {
+          $log.info(response);
+          $scope.venues = response;
+        },
+        function(error) {
+          $log.error(error);
+        }
+      )
     }
   }]);
