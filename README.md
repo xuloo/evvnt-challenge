@@ -64,6 +64,8 @@ The data is periodically collected from the supplied endpoint via Logstash. This
 
 Setting things up like this also separates the data store and collection/collation from the site itself at an infrastructure level. If this project was going into production then the data stores could be clustered, those clusters changed, the management of the pipeline changed/monitored/tested in complete isolation to the site logic. This is a good thing, it means multiple teams can do multiple things, at once, without stepping on each other's toes.
 
+in order to ge the data into Elasticsearch via Logstash (and to do a bit more Ruby work) i created a custom input plugin that's available [here on my Github account](https://github.com/xuloo/logstash-input-evvnt-challenge). It's also built and uploaded to [RubyGems](https://rubygems.org/gems/logstash-input-evvnt-challenge).
+
 ### AngularJS
 
 The front end was built completely separately from the Rails backend:
