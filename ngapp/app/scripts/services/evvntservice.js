@@ -8,7 +8,7 @@
  * Service in the evvntApp.
  */
 angular.module('evvntApp')
-  .service('evvntService', function ($q, $http, $log) {
+  .service('evvntService', function ($q, $http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     return {
 
@@ -19,7 +19,7 @@ angular.module('evvntApp')
        */
       all: function(p) {
         // default to showing the first page of results.
-        if (typeof(p) === 'undefined') p = 1;
+        if (typeof(p) === 'undefined') { p = 1; }
 
         var deferred = $q.defer();
 
@@ -30,7 +30,7 @@ angular.module('evvntApp')
           function(error) {
             deferred.reject(error);
           }
-        )
+        );
 
         return deferred.promise;
       },
@@ -45,7 +45,7 @@ angular.module('evvntApp')
           function(error) {
             deferred.reject(error);
           }
-        )
+        );
 
         return deferred.promise;
       },
@@ -65,7 +65,7 @@ angular.module('evvntApp')
           function(error) {
             deferred.reject(error);
           }
-        )
+        );
 
         return deferred.promise;
       },
@@ -80,7 +80,7 @@ angular.module('evvntApp')
           function(error) {
             deferred.reject(error);
           }
-        )
+        );
 
         return deferred.promise;
       }
