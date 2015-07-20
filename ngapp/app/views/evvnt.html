@@ -1,4 +1,54 @@
-<div class="row" ng-hide="event">
+<div layout="row" flex class="content-wrapper">
+  <md-content layout-padding style="padding: 24px;width: 100%">
+    <form ng-submit="$event.preventDefault()">
+      <md-autocomplete
+          ng-disabled="isDisabled"
+          md-no-cache="noCache"
+          md-selected-item="selectedEvent"
+          md-search-text-change="searchTextChange(searchText)"
+          md-search-text="searchText"
+          md-selected-item-change="selectedItemChange(item)"
+          md-items="item in querySearch(searchText)"
+          md-item-text="item.title"
+          md-min-length="0"
+          md-floating-label="What type of event are you looking for?">
+        <md-item-template>
+          <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.title}}</span>
+        </md-item-template>
+        <md-not-found>
+          No events found for "{{ctrl.searchText}}".
+        </md-not-found>
+      </md-autocomplete>
+      <br/>
+    </form>
+  </md-content>
+</div>
+<div layout="row" flex class="content-wrapper">
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+      <md-list class="event-list">
+        <md-item dir-paginate="e in events | itemsPerPage: 10" total-items="totalEvents" current-page="pagination.current">
+          <md-item-content>
+            <md-button ng-click="selectEvent(e)" ng-class="{'selected' : e === selectedEvent }">
+              <img ng-src="{{e.image_url}}" class="face" alt="">
+              {{e.title}}
+            </md-button>
+          </md-item-content>
+        </md-item>
+      </md-list>
+      <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url="views/pagination-template.tpl.html"></dir-pagination-controls>
+    </md-sidenav>
+    <div layout="column" flex class="content-wrapper" id="primary-col">
+        <md-content layout="column" flex class="md-padding">
+          <h2>{{selectedEvent.title}}</h2>
+          <p>{{selectedEvent.description}}</p>
+          <div class="cell">
+            <img ng-src="{{selectedEvent.image_url}}" alt="{{selectedEvent.title}}">
+          </div>
+        </md-content>
+    </div>
+</div>
+
+<!--div class="row" ng-hide="event">
   <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
 </div>
 <div class="row" ng-hide="event">
@@ -32,16 +82,17 @@
 <div class="row" ng-hide="event">
   <div class="col-lg-12">
     <div dir-paginate="event in events | itemsPerPage: 10" total-items="totalEvents" current-page="pagination.current">
-      <div class="col-lg-10 col-lg-offset-1 well" ng-click="selectEvent(event)">
-        <div class="col-lg-12">
-          <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
-        </div>
+      <div class="col-lg-10 col-lg-offset-1" ng-click="selectEvent(event)">
+
         <div class="col-lg-2">
           <img ng-src="{{event.image_url}}" style="max-width:100px"/>
         </div>
+        <div class="col-lg-10 col-lg-offset-2">
+          <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
+        </div>
         <div class="col-lg-10">
           <span class="label label-primary" ng-click="eventsForVenue(event.venue)">{{event.venue.name}}</span>
-        </div>
+        </div-->
           <!--p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p-->
         <!--div class="col-lg-12" ng-repeat="tag in event.keywords.split(',')">
           <span class="label label-default">{{tag}}</span
@@ -52,7 +103,7 @@
           <span>door: </span><span>{{event.door_time | date:'medium'}}</span>
           <span>last entry: </span><span>{{event.last_entry_time | date:'medium'}}</span>
         </div-->
-        <div class="col-lg-12">
+        <!--div class="col-lg-12">
           <a href="#" ng-click="moreLike(event)">more like this</a>
         </div>
       </div>
@@ -73,4 +124,4 @@
       </div>
     </div>
   </div>
-</div>
+</div-->

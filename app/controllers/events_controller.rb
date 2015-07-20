@@ -22,7 +22,7 @@ class EventsController < ApplicationController
   def search
     result = Event.search query: { match: { 'keywords' => params[:q] } }
 
-    render json: { events: result, total: result.total }
+    render json: result
   end
 
 end

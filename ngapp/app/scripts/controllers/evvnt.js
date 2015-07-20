@@ -8,14 +8,18 @@
  * Controller of the evvntApp
  */
 angular.module('evvntApp')
-  .controller('EvvntCtrl', ['$scope', '$log', 'evvntService', function ($scope, $log, $evvntService) {
+  .controller('EvvntCtrl', ['$scope', '$log', '$mdSidenav', 'evvntService', function ($scope, $log, $mdSidenav, $evvntService) {
 
-    $scope.event = null;
-    $scope.venue = null;
+    $scope.selectedEvent = null;
+    $scope.selectedVenue = null;
 
     $scope.events = [];
     $scope.totalEvents = 0;
     $scope.eventsPerPage = 10;
+
+    function toggleSidenav(name) {
+      $mdSidenav(name).toggle();
+    }
 
     function getResultsPage(pageNumber) {
         $evvntService.all(pageNumber).then(
@@ -54,15 +58,15 @@ angular.module('evvntApp')
         getResultsPage(newPage);
     };
 
-    $scope.selectEvent = function(event) {
-      $scope.event = event;
+    $scope.selectEvent = function(e) {
+      $scope.selectedEvent = e;
+      toggleSidenav('left');
     };
 
     $scope.searchByKeyword = function(q) {
-      $evvntService.search(q). then(
+      $evvntService.search(q).then(
         function(response) {
-          $scope.events = response.events;
-          $scope.totalEvents = response.total;
+          $scope.events = response;
         },
         function(error) {
           $log.error(error);
@@ -98,5 +102,16 @@ angular.module('evvntApp')
       );
     }
 
+    $scope.querySearch = function(query) {
+      return $evvntService.search(query);
+    };
+
+    $scope.searchTextChange = function(text) {
+      $log.info('Text changed to ' + text);
+    };
+
+    $scope.selectedItemChange = function(item) {
+      $log.info('Item changed to ' + JSON.stringify(item));
+    };
 
   }]);
