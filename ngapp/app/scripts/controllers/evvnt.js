@@ -120,8 +120,10 @@ angular.module('evvntApp')
 
     $scope.selectedItemChange = function(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
-      if ($scope.selectedEvent) {
+      if (item) {
         $scope.selectedVenue = null;
+        $scope.selectedEvent = item;
+        getResultsPage(1);
       }
     };
 
