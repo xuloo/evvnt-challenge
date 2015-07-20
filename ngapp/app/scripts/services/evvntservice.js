@@ -55,10 +55,10 @@ angular.module('evvntApp')
        * supplied as an argument.
        * Here 'like' means similar category_id.
        */
-      forVenue: function(venue) {
+      forVenue: function(v) {
         var deferred = $q.defer();
 
-        $http.get('/api/events/forvenue/', {params: {v: venue.name}}).then(
+        $http.get('/api/events/forvenue/', {params: {v: v}}).then(
           function(response) {
             deferred.resolve(response.data);
           },

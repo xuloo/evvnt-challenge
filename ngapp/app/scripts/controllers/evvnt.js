@@ -13,13 +13,20 @@ angular.module('evvntApp')
     $scope.selectedEvent = null;
     $scope.selectedVenue = null;
 
+    $scope.$watch('selectedVenue', function() {
+      if ($scope.selectedVenue) {
+        $scope.eventsForVenue($scope.selectedVenue);
+      }
+    });
+
     $scope.events = [];
     $scope.totalEvents = 0;
     $scope.eventsPerPage = 10;
 
-    function toggleSidenav(name) {
+    $scope.toggleSidenav = function(name) {
+      $log.info("toggling sidenav " + name);
       $mdSidenav(name).toggle();
-    }
+    };
 
     function getResultsPage(pageNumber) {
         $evvntService.all(pageNumber).then(
@@ -39,7 +46,7 @@ angular.module('evvntApp')
         current: 1
     };
 
-    function allVenues() {
+    $scope.loadVenues = function() {
       $evvntService.venues().then(
         function(response) {
           $log.info(response);
@@ -49,10 +56,7 @@ angular.module('evvntApp')
           $log.error(error);
         }
       );
-    }
-
-    allVenues();
-
+    };
 
     $scope.pageChanged = function(newPage) {
         getResultsPage(newPage);
@@ -60,7 +64,7 @@ angular.module('evvntApp')
 
     $scope.selectEvent = function(e) {
       $scope.selectedEvent = e;
-      toggleSidenav('left');
+      $scope.toggleSidenav('left');
     };
 
     $scope.searchByKeyword = function(q) {
@@ -83,6 +87,7 @@ angular.module('evvntApp')
         function(response) {
           $scope.events = response.events;
           $scope.totalEvents = response.total;
+          $scope.selectedEvent = $scope.events[0];
         },
         function(error) {
           $log.error(error);
@@ -107,11 +112,17 @@ angular.module('evvntApp')
     };
 
     $scope.searchTextChange = function(text) {
-      $log.info('Text changed to ' + text);
+      $log.info('Text changed to \'' + text + '\'');
+      if (text !== '') {
+        $scope.selectedVenue = null;
+      }
     };
 
     $scope.selectedItemChange = function(item) {
       $log.info('Item changed to ' + JSON.stringify(item));
+      if ($scope.selectedEvent) {
+        $scope.selectedVenue = null;
+      }
     };
 
   }]);

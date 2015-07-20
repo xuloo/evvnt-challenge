@@ -12,6 +12,8 @@ class EventsController < ApplicationController
   # returns all the events that are occurring at the venue
   # name of the venue is supplied in the 'v' param.
   def for_venue
+    print "events for venue '#{params[:v]}'"
+
     result = Event.search query: { match: { 'venue.name' => params[:v] } }
 
     render json: { events: result, total: result.total }

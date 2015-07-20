@@ -16,15 +16,20 @@
           <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.title}}</span>
         </md-item-template>
         <md-not-found>
-          No events found for "{{ctrl.searchText}}".
+          No events found for "{{searchText}}".
         </md-not-found>
       </md-autocomplete>
       <br/>
     </form>
+    <md-select ng-model="selectedVenue" md-on-open="loadVenues()" style="width: 100%;">
+      <md-select-label>{{ selectedVenue ? selectedVenue : 'Where is your event?' }}</md-select-label>
+      <md-option ng-value="venue" ng-repeat="venue in venues">{{venue}}</md-option>
+    </md-select>
   </md-content>
 </div>
 <div layout="row" flex class="content-wrapper">
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
+      <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url="views/pagination-template.tpl.html"></dir-pagination-controls>
       <md-list class="event-list">
         <md-item dir-paginate="e in events | itemsPerPage: 10" total-items="totalEvents" current-page="pagination.current">
           <md-item-content>
@@ -46,82 +51,23 @@
           </div>
         </md-content>
     </div>
+    <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+      <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">Sidenav Right</h1>
+      </md-toolbar>
+      <md-content layout-padding>
+        <md-list class="event-list">
+          <md-item ng-repeat="v in venues">
+            <md-item-content>
+              <md-button ng-click="eventsForVenue(v)" ng-class="{'selected' : v === selectedVenue }">
+                {{v}}
+              </md-button>
+            </md-item-content>
+          </md-item>
+        </md-list>
+        <md-button ng-click="toggleSidenav('right')" class="md-primary">
+          Close
+        </md-button>
+      </md-content>
+    </md-sidenav>
 </div>
-
-<!--div class="row" ng-hide="event">
-  <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm" custom-class="getDayClass(date, mode)"></datepicker>
-</div>
-<div class="row" ng-hide="event">
-  <div class="container">
-    <form class="form-horizontal">
-      <fieldset>
-        <div class="form-group col-lg-12">
-          <label for="inputKeyword" class="col-lg-2 control-label">Search</label>
-          <div class="col-lg-10">
-            <input type="text" class="form-control" id="inputKeyword" placeholder="Search" ng-model="keywords">
-          </div>
-        </div>
-        <div class="form-group col-lg-12">
-          <div class="col-lg-10 col-lg-offset-2">
-            <button type="reset" class="btn btn-default" ng-click="clearSearch()">Cancel</button>
-            <button type="submit" class="btn btn-primary" ng-click="searchByKeyword(keywords)">Submit</button>
-          </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <div class="form-group col-lg-12">
-          <label for="inputKeyword" class="col-lg-2 control-label">Search</label>
-          <div class="col-lg-10">
-            <select ng-model="venue" ng-options="venue as venue for venue in venues" ng-init="selected=venues[0]"></select>
-          </div>
-        </div>
-      </fieldset>
-    </form>
-  </div>
-</div>
-<div class="row" ng-hide="event">
-  <div class="col-lg-12">
-    <div dir-paginate="event in events | itemsPerPage: 10" total-items="totalEvents" current-page="pagination.current">
-      <div class="col-lg-10 col-lg-offset-1" ng-click="selectEvent(event)">
-
-        <div class="col-lg-2">
-          <img ng-src="{{event.image_url}}" style="max-width:100px"/>
-        </div>
-        <div class="col-lg-10 col-lg-offset-2">
-          <h4>{{event.title}}</h4><span class="label label-primary">{{event.start_time}}</span>
-        </div>
-        <div class="col-lg-10">
-          <span class="label label-primary" ng-click="eventsForVenue(event.venue)">{{event.venue.name}}</span>
-        </div-->
-          <!--p class="text-primary" ng-repeat="link in event.links"><a ng-href="{{link[1]}}" target="_blank">{{link[0]}}</a></p-->
-        <!--div class="col-lg-12" ng-repeat="tag in event.keywords.split(',')">
-          <span class="label label-default">{{tag}}</span
-        </div-->
-        <!--div class="col-lg-12">
-          <span>start: </span><span>{{event.start_time | date:'medium'}}</span>
-          <span>end: </span><span>{{event.end_time | date:'medium'}}</span>
-          <span>door: </span><span>{{event.door_time | date:'medium'}}</span>
-          <span>last entry: </span><span>{{event.last_entry_time | date:'medium'}}</span>
-        </div-->
-        <!--div class="col-lg-12">
-          <a href="#" ng-click="moreLike(event)">more like this</a>
-        </div>
-      </div>
-    </div>
-    <dir class="col-lg-10 col-lg-offset-1 well">
-      <dir class="center-block">
-        <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
-      </dir>
-    </dir>
-  </div>
-</div>
-
-<div class="row" ng-show="event">
-  <div class="col-lg-12">
-    <div class="col-lg-3 well">
-      <div class="col-lg-12">
-        <h2>{{event.title}}</h2>
-      </div>
-    </div>
-  </div>
-</div-->

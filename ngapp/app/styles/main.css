@@ -7,12 +7,12 @@
   margin-right: 0;
 }
 
-.muppet-list .md-button {
+.event-list .md-button {
   color: inherit;
   text-align: left;
   width: 100%;
 }
-.muppet-list .selected {
+.event-list .selected {
   color: #03a9f4;
 }
 .face {
