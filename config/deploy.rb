@@ -3,7 +3,7 @@ server 'evvnt-challenge.xuloo.cc', port: 22, roles: [:web, :app, :db], primary: 
 
 set :repo_url,        'git@github.com:xuloo/evvnt-challenge.git'
 set :application,     'event'
-set :user,            'deploy'
+set :user,            'ubuntu'
 set :puma_threads,    [4, 16]
 set :puma_workers,    0
 

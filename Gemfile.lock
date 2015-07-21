@@ -203,6 +203,7 @@ DEPENDENCIES
   elasticsearch-model!
   elasticsearch-persistence!
   elasticsearch-rails!
+  execjs
   jquery-rails
   puma
   rails (= 3.2.19)
