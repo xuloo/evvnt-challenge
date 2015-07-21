@@ -83,6 +83,21 @@ angular.module('evvntApp')
         );
 
         return deferred.promise;
+      },
+
+      after: function(date) {
+        var deferred = $q.defer();
+
+        $http.get('/api/events/after', {params: {after: date}}).then(
+          function(response) {
+            deferred.resolve(response);
+          },
+          function(error) {
+            deferred.reject(error);
+          }
+        );
+
+        return deferred.promise;
       }
 
     };

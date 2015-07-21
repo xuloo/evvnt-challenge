@@ -25,4 +25,13 @@ class EventsController < ApplicationController
     render json: result
   end
 
+  def after
+    print "finding events after #{params[:after]}"
+
+    result = Event.search query: { filtered: { query: { match_all: {} }, filter: { range: { start_time: { gte: params[:after] }}}}}
+    print "there were #{result.total} results"
+
+    render json: result
+  end
+
 end

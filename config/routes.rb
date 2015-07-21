@@ -4,6 +4,8 @@ Events::Application.routes.draw do
 
   get 'api/events/search' => 'events#search'
   get 'api/events/forvenue' => 'events#for_venue'
+  get 'api/events/after' => 'events#after'
+
   get 'api/venues' => 'venues#all'
 
   resources :events, path: 'api/events'

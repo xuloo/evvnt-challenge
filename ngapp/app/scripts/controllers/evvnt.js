@@ -8,9 +8,27 @@
  * Controller of the evvntApp
  */
 angular.module('evvntApp')
-  .controller('EvvntCtrl', ['$scope', '$log', '$mdSidenav', '$mdDialog', '$controller', 'evvntService', function ($scope, $log, $mdSidenav, $mdDialog, $controller, $evvntService) {
+  .controller('EvvntCtrl', ['$scope', '$log', '$mdSidenav', '$mdDialog', '$controller', 'evvntService', 'moment', function ($scope, $log, $mdSidenav, $mdDialog, $controller, $evvntService, $moment) {
 
     $scope.fromDate = null;
+
+    function after() {
+      $evvntService.after($moment($scope.fromDate).format("YYYY-MM-DD")).then(
+        function(response) {
+          $scope.events = response;
+        },
+        function(error) {
+          $log.error(error);
+        }
+      )
+    }
+
+    $scope.$watch('fromDate', function() {
+      if ($scope.fromDate) {
+        after();
+      }
+    });
+
     $scope.toDate = null;
 
     $scope.selectedEvent = null;

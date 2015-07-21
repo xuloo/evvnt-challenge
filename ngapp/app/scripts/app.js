@@ -17,7 +17,8 @@ angular
     'ngTouch',
     'angularUtils.directives.dirPagination',
     'ngMaterial',
-    'mdDateTime'
+    'mdDateTime',
+    'angularMoment'
   ])
   .config(function ($routeProvider) {
     $routeProvider
