@@ -34,8 +34,7 @@ group :development do
 end
 
 gem 'puma'
-gem 'execjs'
-gem 'jquery-rails'
+#gem 'execjs'
 gem 'rspec-rails'
 
 # To use ActiveModel has_secure_password
