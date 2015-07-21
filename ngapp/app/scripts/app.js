@@ -16,7 +16,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'angularUtils.directives.dirPagination',
-    'ngMaterial'
+    'ngMaterial',
+    'mdDateTime'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -8,7 +8,10 @@
  * Controller of the evvntApp
  */
 angular.module('evvntApp')
-  .controller('EvvntCtrl', ['$scope', '$log', '$mdSidenav', 'evvntService', function ($scope, $log, $mdSidenav, $evvntService) {
+  .controller('EvvntCtrl', ['$scope', '$log', '$mdSidenav', '$mdDialog', '$controller', 'evvntService', function ($scope, $log, $mdSidenav, $mdDialog, $controller, $evvntService) {
+
+    $scope.fromDate = null;
+    $scope.toDate = null;
 
     $scope.selectedEvent = null;
     $scope.selectedVenue = null;
@@ -33,6 +36,7 @@ angular.module('evvntApp')
           function(response) {
             $scope.events = response.events;
             $scope.totalEvents = response.total;
+            //$scope.selectedItemChange($scope.events[0]);
           },
           function(error) {
             $log.error(error);
@@ -127,4 +131,59 @@ angular.module('evvntApp')
       }
     };
 
+    $scope.showFromDate = function(ev) {
+      $mdDialog.show({
+        controller: DateDialogController,
+        templateUrl: 'views/fromDate.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+      })
+      .then(function(from) {
+        $scope.alert = 'from date: "' + from + '".';
+        $scope.fromDate = from;
+        if ($scope.selectedEvent) {
+          $scope.selectedEvent = null;
+        }
+        if ($scope.selectedVenue) {
+          $scope.selectedVenue = null;
+        }
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    };
+
+    $scope.showToDate = function(ev) {
+      $mdDialog.show({
+        controller: DateDialogController,
+        templateUrl: 'views/toDate.tpl.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+      })
+      .then(function(to) {
+        $scope.alert = 'to date: "' + to + '".';
+        $scope.toDate = to;
+        if ($scope.selectedEvent) {
+          $scope.selectedEvent = null;
+        }
+        if ($scope.selectedVenue) {
+          $scope.selectedVenue = null;
+        }
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+    };
+
   }]);
+
+  function DateDialogController($scope, $log, $mdDialog) {
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+    $scope.selectDate = function(from) {
+      $log.info("closing window with date: " + from);
+      $mdDialog.hide(from);
+    };
+  }

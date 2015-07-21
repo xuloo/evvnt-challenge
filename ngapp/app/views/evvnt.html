@@ -24,6 +24,14 @@
       <md-select-label>{{ selectedVenue ? selectedVenue : 'Where is your event?' }}</md-select-label>
       <md-option ng-value="venue" ng-repeat="venue in venues">{{venue}}</md-option>
     </md-select>
+    <section>
+      <md-button class="md-primary md-raised" ng-click="showFromDate($event)" flex flex-md="100">
+        {{fromDate ? fromDate : 'earliest date' | date:'medium'}}
+      </md-button>
+      <md-button class="md-primary md-raised" ng-click="showToDate($event)" flex flex-md="100">
+        {{toDate ? toDate : 'latest date' | date:'medium'}}
+      </md-button>
+    </section>
   </md-content>
 </div>
 <div layout="row" flex class="content-wrapper">
@@ -42,13 +50,14 @@
       <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" template-url="views/pagination-template.tpl.html"></dir-pagination-controls>
     </md-sidenav>
     <div layout="column" flex class="content-wrapper" id="primary-col">
-        <md-content layout="column" flex class="md-padding">
-          <h2>{{selectedEvent.title}}</h2>
+      <md-card ng-show="selectedEvent">
+        <md-card-content>
+          <img ng-src="{{selectedEvent.image_url}}" class="md-card-image" alt="{{selectedEvent.title}}">
+          <h2 class="md-title">{{selectedEvent.title}}</h2>
+          <md-subheader class="md-accent">{{selectedEvent.start_time}}</md-subheader>
           <p>{{selectedEvent.description}}</p>
-          <div class="cell">
-            <img ng-src="{{selectedEvent.image_url}}" alt="{{selectedEvent.title}}">
-          </div>
-        </md-content>
+        </md-card-content>
+      </md-card>
     </div>
     <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
       <md-toolbar class="md-theme-light">
