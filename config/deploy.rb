@@ -1,5 +1,5 @@
 # Change these
-server 'evvnt-challenge.xuloo.cc', port: 3000, roles: [:web, :app, :db], primary: true
+server 'evvnt-challenge.xuloo.cc', port: 22, roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:xuloo/evvnt-challenge.git'
 set :application,     'event'

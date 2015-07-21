@@ -34,6 +34,7 @@ group :development do
 end
 
 gem 'puma'
+gem 'execjs'
 gem 'jquery-rails'
 gem 'rspec-rails'
 
