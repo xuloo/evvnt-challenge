@@ -34,6 +34,8 @@ group :development do
   # integrate bundler with capistrano
   gem 'capistrano-bundler'
 
+  gem 'capistrano-rvm'
+
   gem 'capistrano-unicorn-nginx', '~> 3.2.0'
 end
 
