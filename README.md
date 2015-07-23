@@ -211,3 +211,23 @@ output {
 ```
 
 You'll then have to specify this config when you start Logstash.
+
+==
+
+## [TODO]
+
+##### Search between dates
+At the moment Elastic search queries aren't returning results for a filter with dates in it. I've added the JS 'moment' library in order to format dates nicely to pass to ES (to see if it's a problem with formatting in the request) but that's not the problem.
+
+##### UI/UX
+There's a lot of work to do with the layout of the front-end, including, but not limited to:
+* The date selection for date filtering
+* The layout of the 'detail' view (shown when you select an event from the list)
+* Make the 'search' section at the top of the page much more unobtrusive, put the content to the top (perhaps make the search options part of a burger menu)
+* Make the keyword search much more google-y - have it search not just keywords but description, title etc and make the auto-complete list contents more styled (add the date/time of the event, thumbnail image etc.)
+
+##### Deployment
+Capistrano is setup to deploy (with Unicorn serving and ngix proxying) but it's not quite there yet. Needs to add the 'grunt build' of the front end app and point to the ngapp/dist directory.
+
+##### Logstash plugin
+* At the moment a new net connection is created each time the request for data is made - this should be created when the plugin is started and torn down when it's destroyed so the same connection is used throughout the plugin's lifetime (with error handling to recreate it if it's dropped).
