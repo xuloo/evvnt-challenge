@@ -149,12 +149,25 @@ curl -XPOST 'http://localhost:9200/events'
 
 ###### Customise the mapping for the 'event' type
 
-We need to map the _id field for the event document to the 'id' property of the event that's being stored in the document. We also need to prevent the analyzer from
+We need to map the `_id` field for the event document to the 'id' property of the event that's being stored in the document. We also need to prevent the analyzer from
 processing venue.name - otherwise when we try to get the list of the venue names with an 'aggregate' it'll give us the unique _words_ that make up the venue
 names rather than the _phrases_.
 
 ```
-curl -XPUT 'http://localhost:9200/events/_mapping/event' -d '{"event": {"_id": {"path": "id"}, "properties": {"venue": {"properties": {"name": {"type": "string", "index": "not_analyzed"}}}}}}'
+# create the 'events' index
+curl -XPUT 'http://localhost:9200/events/'
+
+# list all the indices to confirm creation
+curl 'localhost:9200/_cat/indices?v'
+
+# create the '_id' mapping - the document's '_id' field will now be the same as the value of the 'id' property of the document.
+curl -XPUT 'http://localhost:9200/events/_mapping/event' -d '{"event": {"_id": {"path": "id"}}}'
+
+# create the mapping for the 'venue.name' property field - stopping it from being analyzed
+curl -XPUT 'http://localhost:9200/events/event/_mapping' -d '{"event": {"properties": {"venue": {"properties": {"name": {"type": "string", "index": "not_analyzed"}}}}}}'
+
+# check the mappings are all created correctly
+curl -XGET 'http://localhost:9200/events/_mapping/event'
 ```
 
 ### Install the _logstash-input-evvnt-challenge_ plugin into Logstash
