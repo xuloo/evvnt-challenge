@@ -99,24 +99,21 @@ This is the easiest way - it'll connect to the same ES instance that the demo si
 export ELASTICSEARCH_HOST=evvnt-challenge.xuloo.cc
 ```
 
-Then you'll need to setup the front-end project
-
-```
-npm install
-bower install
-```
-
-Then it's the usual
+Start the Rails app
 
 ```
 bundle install
 rails s
 ```
 
-then start the front-end project with grunt
+Then you'll need to setup the front-end project
 
 ```
+cd [repo directory]/ngapp
+npm install
+bower install
 grunt server
+
 ```
 
 This starts the front-end running on port 9000 - with the rails app running on 3000 there's a problem accessing the api so there's a proxy configured in the `Gruntfile` to map the `/api` calls to the correct port.
@@ -211,6 +208,14 @@ output {
 ```
 
 You'll then have to specify this config when you start Logstash.
+
+##### note about grunt build
+
+You may find that the `cdnify:dist` task step of `grunt build` fails due to an error with git - if so then it's probably because it's trying to make a git request with the `git://` protocol. To fix it try
+
+```
+git config --global url."https://".insteadOf git://
+```
 
 ==
 
