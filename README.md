@@ -141,13 +141,7 @@ Once ES and Logstash are running you'll need to:
 3. Install the _logstash-input-evvnt-challenge_ plugin into Logstash
 4. Define the Logstash pipeline that will collect the event data and push it to ES.
 
-###### Create the 'events' index
-
-```
-curl -XPOST 'http://localhost:9200/events'
-```
-
-###### Customise the mapping for the 'event' type
+###### Create the 'events' index && Customise the mapping for the 'event' type
 
 We need to map the `_id` field for the event document to the 'id' property of the event that's being stored in the document. We also need to prevent the analyzer from
 processing venue.name - otherwise when we try to get the list of the venue names with an 'aggregate' it'll give us the unique _words_ that make up the venue
