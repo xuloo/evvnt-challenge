@@ -231,3 +231,6 @@ Capistrano is setup to deploy (with Unicorn serving and ngix proxying) but it's 
 
 ##### Logstash plugin
 * At the moment a new net connection is created each time the request for data is made - this should be created when the plugin is started and torn down when it's destroyed so the same connection is used throughout the plugin's lifetime (with error handling to recreate it if it's dropped).
+
+##### Tests
+There's very little to test in the rails app right now but the front-end could be provided with tests - to ensure that the UI components are in the correct state (when an event is selected, searched for etc.)
